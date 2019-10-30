@@ -8,5 +8,5 @@ alpha = 50;
 K = 100;
 filterBank = createFilterBank();
 
-dictionary = getDictionary(imagePaths, alpha, K, 'random');
-save('../data/dictionaryRandom.mat', 'filterBank', 'dictionary');
+dictionary = getDictionary(imagePaths, alpha, K, 'harris');
+save('../data/dictionaryHarris.mat', 'filterBank', 'dictionary');

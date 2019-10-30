@@ -1,7 +1,7 @@
 function [dictionary] = getDictionary(imgPaths, alpha, K, method)
     filterBank = createFilterBank();
     datadir = '../data';
-    pixelResponses = zeros(3*alpha*length(imgPaths), length(filterBank));
+    pixelResponses = zeros(alpha*length(imgPaths), 3*length(filterBank));
     count = 1;
     for i = 1:length(imgPaths)
         img = imread(sprintf('%s/%s', datadir, imgPaths{i}));
@@ -9,13 +9,13 @@ function [dictionary] = getDictionary(imgPaths, alpha, K, method)
         % ignore greyscale
         [~,~,channels] = size(img);
         if channels == 1
-            continue;
+            img = cat(3, img, img, img);
         end
             
         filterResponses = extractFilterResponses(img, filterBank);
 
         if method == 'harris'
-            points = getHarrisPoints(img, alpha, k);
+            points = getHarrisPoints(img, alpha, 0.04);
         else
             points = getRandomPoints(img, alpha);
         end
@@ -28,9 +28,9 @@ function [dictionary] = getDictionary(imgPaths, alpha, K, method)
             p = points(j,:);
             vec = filterResponses(p(1), p(2), :);
             vec = vec(:);
-            vec = vec2mat(vec,3)';  % each row of vec is a 20 dimensional pixel for one color channel
-            pixelResponses(count:count+2,:) = vec;
-            count = count + 3;
+            %vec = vec2mat(vec,3)';  % each row of vec is a 20 dimensional pixel for one color channel
+            pixelResponses(count,:) = vec';
+            count = count + 1;
         end
     end
     
