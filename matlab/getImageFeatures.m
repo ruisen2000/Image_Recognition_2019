@@ -1,5 +1,6 @@
 function [h] = getImageFeatures(wordMap, dictionarySize)
-    h = zeros(length(dictionarySize));
+% return histogram as row vector
+    h = zeros(1,dictionarySize);
     for i = 1:dictionarySize
         h(i) = sum(wordMap==i, 'all');
     end

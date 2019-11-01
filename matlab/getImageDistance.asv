@@ -1,0 +1,6 @@
+function [dist] = getImageDistance(hist1, hist2, method)
+    if strcmp(method, 'euclidean')
+         dist = sqrt(sum((G - G2) .^ 2))
+    elseif strcmp(method, 'chi2')
+        dist = hist1 - hist2)
+end
