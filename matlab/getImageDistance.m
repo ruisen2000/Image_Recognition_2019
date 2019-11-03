@@ -1,10 +1,14 @@
-function [dist] = getImageDistance(hist1, hist2, method)
+function [dist] = getImageDistance(hist1, histSet, method)
+    % returns column vector of distances
+    [r,~] = size(histSet);
+    hist1 = repmat(hist1, r,1);
+    
     if strcmp(method, 'euclidean')
-         dist = sqrt(sum((G - G2) .^ 2));
+         dist = sqrt(sum((hist1 - histSet) .^ 2, 2));
     elseif strcmp(method, 'chi2')
-        numer = (hist1 - hist2).^2;
-        denom = hist1 + hist2;
-        dist = 0.5* sum(numer ./ denom);
+        numer = (hist1 - histSet).^2;
+        denom = hist1 + histSet;
+        dist = 0.5* sum(numer./denom, 2);
     else
         disp('error: method doesnt exist')
     end

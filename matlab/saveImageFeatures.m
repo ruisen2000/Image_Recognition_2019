@@ -1,16 +1,8 @@
-load('../data/traintest.mat','all_imagenames','mapping');
-load('../data/dictionaryHarris.mat','filterBank','dictionary');
+load('../data/traintest.mat','test_imagenames','mapping');
+load('../data/traintest.mat','train_imagenames','mapping');
+load('../data/dictionaryRandom.mat','filterBank','dictionary');
 
-source = '../data/';
-target = '../data/'; 
-l = length(all_imagenames);
-trainFeatures = zeros(l, clusters);
-[clusters,c] = size(dictionary);
-
-for i=1:l
-    data = load([target, strrep(all_imagenames{i},'.jpg','.mat')]);
-    wordMap = data.wordMap;
-    h = getImageFeatures(wordMap, clusters);
-    trainFeatures(i,:) = h;
-end
-save('../data/trainFeaturesHarris.mat','trainFeatures');
+% convert the wordmap for training and testing images (computed in batchToVisualWords) into a histogram
+[clusters,~] = size(dictionary);
+saveHistogram(train_imagenames, clusters, 'train', 'Random')
+saveHistogram(test_imagenames, clusters, 'test', 'Random')
