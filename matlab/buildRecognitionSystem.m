@@ -2,12 +2,15 @@ function buildRecognitionSystem(method)
     datadir = '../data';
     data = load(sprintf('%s/%s', datadir, 'traintest.mat'));
     trainLabels = data.train_labels;
-    data = load(sprintf('%s/%s', datadir, 'trainFeaturesHarris.mat'));
-    trainFeatures = data.trainFeatures;
+
     if strcmp(method, 'Harris')
         dict = load(sprintf('%s/%s', datadir, 'dictionaryHarris.mat'));
+        data = load(sprintf('%s/%s', datadir, 'trainFeaturesHarris.mat'));
+        trainFeatures = data.features;
     elseif strcmp(method, 'Random')
         dict = load(sprintf('%s/%s', datadir, 'dictionaryRandom.mat'));
+        data = load(sprintf('%s/%s', datadir, 'trainFeaturesRandom.mat'));
+        trainFeatures = data.features;
     else
         disp("cannot find method");
         return

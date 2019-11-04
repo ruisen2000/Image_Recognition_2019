@@ -40,18 +40,15 @@ function [points] = getHarrisPoints(I, alpha, k)
         grad_xy_sum'; 
         grady_sqr_sum'];
     
-        
+   
     R = zeros(1,length(grad_xy_sum));
     
     for i = 1:length(grad_xy_sum)
         Mi = vec2mat(H(:,i),2);
         R(i) = det(Mi) - k*trace(Mi)^2;
     end
-    
-    % Non-maxim suppression on R
+
     R = vec2mat(R, c);
-    regMax = imregionalmax(R);
-    R(regMax == 0) = 0;
     
     [B,I] = maxk(R(:), alpha);
     [row, col] = ind2sub(size(imgx), I);
