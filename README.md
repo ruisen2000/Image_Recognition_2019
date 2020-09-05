@@ -1,1 +1,1 @@
-CMPT412_A4
+Object Recognition using bag of words method.
